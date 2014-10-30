@@ -1,0 +1,57 @@
+.container{
+	margin: auto;
+	margin-top: -25px;
+	width: 720px;
+	border: dotted 1px black;
+}
+
+.row{
+	width: 100%;
+	display: flex;
+}
+
+.col-1{
+	width: 8.33%;
+}
+
+.col-6{
+	width: 50%;
+}
+
+.top_space{
+	height: 30vh;
+}
+
+.instruction{
+	height: 10vh;
+}
+
+.track{
+	width: 100%;
+	margin: auto;
+}
+
+.racer_table{
+	width:100%;
+}
+tr{
+	width:100%;
+}
+
+td{
+	background-color: grey;
+	width:36px;
+	height:10vh;
+	text-align: center;
+	color: white;
+}
+
+#player1_strip{
+	border-bottom: solid red 1px;
+}
+
+.image{
+	max-width: 100%;
+	max-height: 100%;
+}
+
