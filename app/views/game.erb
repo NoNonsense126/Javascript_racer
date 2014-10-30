@@ -1,9 +1,16 @@
 
-<body>
-  <div class="top_space">
-    <h1> STEP ON IT! </h1>
+<body class="game">
+  <div class="row">
+    <div class="top_space col-8">
+      <h1> STEP ON IT! </h1>
+    </div>
+    <div class="score_box col-4">
+    <div class="basic stopwatch">Time:</div>
+        
+    </div>
   </div>
   <div class="instruction">
+    <p> Player <%= @user1 %> </p>
     <p> Spam Q!</p>
   </div>
   <div class="row track">
@@ -54,8 +61,19 @@
       </tr>
     </table>
   </div>
-  <div class="row">
-    <p> Spam P!</p>
+  <div class="row instruction">
+    <p> Player <%= @user2 %> </p>
   </div>
+  <p class="row instruction"> Spam P!</p>
+</pre>
 </body>
 </html>
+
+<script> 
+$(document).ready(function() {
+
+});
+</script>
+
+
+

@@ -2,7 +2,10 @@
 	margin: auto;
 	margin-top: -25px;
 	width: 720px;
-	border: dotted 1px black;
+}
+
+.game {
+	background-color: green;
 }
 
 .row{
@@ -14,16 +17,54 @@
 	width: 8.33%;
 }
 
+.col-2{
+	width: 16.66%;
+}
+
+.col-4{
+	width: 33.33%;
+}
+
 .col-6{
 	width: 50%;
 }
 
+.col-8{
+	width: 66.67%;
+}
+
+.col-10{
+	width: 83.3%;
+}
+
 .top_space{
-	height: 30vh;
+	height: 25vh;
+}
+
+.score_box {
+	float:right;
+	border: solid 1px red;
+	border-radius: 5px;
+	height: 10vh;
+	background-color: black;
+	color: white;
+}
+
+.stopwatch{
+	width:50%;
+	margin:0 auto;
+	text-align: center;
+	line-height: 50px;
+}
+.time{
+	margin-top: 5px;
+	margin-left: 5px;
 }
 
 .instruction{
 	height: 10vh;
+	width:50%;
+	margin:0 auto;
 }
 
 .track{
