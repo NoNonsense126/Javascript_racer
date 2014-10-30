@@ -103,9 +103,18 @@ $(document).ready(function() {
       if (index == 19) {
         aTimer.stop()
         alert(player.charAt(0).toUpperCase() + player.slice(1) + "Won!");
-        window.location = '/won?won=' + player + '&player1=' + location('player1') + '&player2=' + location('player2') + '&time=' + $('span').text()
+        fillAndSubmitHiddenForm(player);
       }
     };
+
+    function fillAndSubmitHiddenForm(player) {
+      theForm = document.getElementById( 'realForm' );
+      theForm.won.value = player;
+      theForm.player1.value = location('player1');
+      theForm.player2.value = location('player2');
+      theForm.time.value = $('span').text();
+      theForm.submit();
+    }
 
     function location(player) {
       var active_ele = "tr#" + player + "_strip td";

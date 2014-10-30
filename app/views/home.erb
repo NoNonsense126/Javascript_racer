@@ -8,4 +8,13 @@
     <input class="pull-right play" type="submit" value="Play!">
   </form>
 
+  <div class="row" style="height:100px"> </div>
+
+  <h2> Last 10 games </h2>
+  <% @game_list.each do |game| %>
+    <a href="/oldgame/<%= game.id %>">
+      <p><%= game.users[0].name %> vs <%= game.users[1].name %></p>
+    </a>
+  <% end %>
+
 </div>

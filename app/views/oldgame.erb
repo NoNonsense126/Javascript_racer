@@ -1,0 +1,50 @@
+
+<body class="game">
+  <div class="row">
+    <div class="top_space col-8">
+      <h1> Relive your victory! </h1>
+    </div>
+    <div class="score_box col-4">
+    <div class="timer">Time to victory!: <%= @game.time_taken || "Game not completed" %></div>
+        
+    </div>
+  </div>
+  <div class="instruction">
+    <p> Player <%= @player_1.name %> </p>
+  </div>
+  <div class="row track">
+    <table class="racer_table">
+      <tr id="player1_strip">
+        <% 20.times do |index| %>
+          <%if index == @game.users_in_games.find_by(player_number: 1).final_index %>
+            <td class= "active"><img src="/images/car.jpeg" alt="car" class="image"></td>
+          <% else %>
+            <td>-</td>  
+          <% end %>
+        <% end %>
+      </tr>
+      <tr id="player2_strip">
+        <% 20.times do |index| %>
+          <%if index == @game.users_in_games.find_by(player_number: 2).final_index %>
+            <td class= "active"><img src="/images/car2.jpeg" alt="car" class="image"></td>
+          <% else %>
+            <td>-</td>  
+          <% end %>
+        <% end %>
+      </tr>
+    </table>
+  </div>
+  <div class="row instruction">
+    <p> Player <%= @player_2.name %> </p>
+  </div>
+</body>
+</html>
+
+<script> 
+$(document).ready(function() {
+
+});
+</script>
+
+
+

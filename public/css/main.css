@@ -47,7 +47,9 @@
 	border-radius: 5px;
 	height: 10vh;
 	background-color: black;
-	color: white;
+	color: white;	
+	display: flex;
+	align-items: center;
 }
 
 .stopwatch{
@@ -56,6 +58,13 @@
 	text-align: center;
 	line-height: 50px;
 }
+
+.timer{
+	width:50%;
+	margin:0 auto;
+	text-align: center;
+}
+
 .time{
 	margin-top: 5px;
 	margin-left: 5px;
