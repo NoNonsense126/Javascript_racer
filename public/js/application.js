@@ -1,136 +1,158 @@
 $(document).ready(function() {
-  var Stopwatch = function(elem, options) {
+    var Stopwatch = function(elem, options) {
 
-    var timer       = createTimer(),
-        startButton = createButton("start", start),
-        stopButton  = createButton("stop", stop),
-        resetButton = createButton("reset", reset),
-        offset,
-        clock,
-        interval;
+      var timer       = createTimer(),
+          startButton = createButton("start", start),
+          stopButton  = createButton("stop", stop),
+          resetButton = createButton("reset", reset),
+          offset,
+          clock,
+          interval;
 
-    // default options
-    options = options || {};
-    options.delay = options.delay || 1;
+      // default options
+      options = options || {};
+      options.delay = options.delay || 1;
 
-    // append elements     
-    elem.appendChild(timer);
+      // append elements     
+      elem.appendChild(timer);
 
-    // initialize
-    reset();
+      // initialize
+      reset();
 
-    // private functions
-    function createTimer() {
-      return document.createElement("span");
-    }
-
-    function createButton(action, handler) {
-      var a = document.createElement("a");
-      a.href = "#" + action;
-      a.innerHTML = action;
-      a.addEventListener("click", function(event) {
-        handler();
-        event.preventDefault();
-      });
-      return a;
-    }
-
-    function start() {
-      if (!interval) {
-        offset   = Date.now();
-        interval = setInterval(update, options.delay);
+      // private functions
+      function createTimer() {
+        return document.createElement("span");
       }
-    }
 
-    function stop() {
-      if (interval) {
-        clearInterval(interval);
-        interval = null;
+      function createButton(action, handler) {
+        var a = document.createElement("a");
+        a.href = "#" + action;
+        a.innerHTML = action;
+        a.addEventListener("click", function(event) {
+          handler();
+          event.preventDefault();
+        });
+        return a;
       }
-    }
 
-    function reset() {
-      clock = 0;
-      render();
-    }
+      function start() {
+        if (!interval) {
+          offset   = Date.now();
+          interval = setInterval(update, options.delay);
+        }
+      }
 
-    function update() {
-      clock += delta();
-      render();
-    }
+      function stop() {
+        if (interval) {
+          clearInterval(interval);
+          interval = null;
+        }
+      }
 
-    function render() {
-      timer.innerHTML = clock/1000; 
-    }
+      function reset() {
+        clock = 0;
+        render();
+      }
 
-    function delta() {
-      var now = Date.now(),
-          d   = now - offset;
+      function update() {
+        clock += delta();
+        render();
+      }
 
-      offset = now;
-      return d;
-    }
+      function render() {
+        timer.innerHTML = clock/1000; 
+      }
 
-    // public API
-    this.start  = start;
-    this.stop   = stop;
-    this.reset  = reset;
- };
+      function delta() {
+        var now = Date.now(),
+            d   = now - offset;
 
-    var elems = document.getElementsByClassName("basic");
+        offset = now;
+        return d;
+      }
 
-    for (var i=0, len=elems.length; i<len; i++) {
-      aTimer = new Stopwatch(elems[i], {delay: 10});
-    }
+      function time() {
+        return clock;
+      }
 
-    function restart() {
-      $('tr td.active').replaceWith('<td>-</td>');
-      $('tr#player1_strip td').eq(0).replaceWith("<td class= 'active'><img src='images/car.jpeg' alt='car' class='image'></td>");
-      $('tr#player2_strip td').eq(0).replaceWith("<td class= 'active'><img src='images/car2.jpeg' alt='car' class='image'></td>");
+      // public API
+      this.time = time;
+      this.start  = start;
+      this.stop   = stop;
+      this.reset  = reset;
+   };
+
+    var Player = function(name){
+      this.name = name;
+      this.location = 0;
+
+      function moveCar(player) {
+        game.timer.start();
+        var active_ele = "tr#player" + this.playerNum + "_strip td";
+        $(active_ele).eq(this.location).replaceWith("<td>-</td>");
+        this.location += 1;
+        $(active_ele).eq(this.location).replaceWith( "<td class= 'active'><img src=" + this.carPath + " alt='car' class='image'></td>" );
+      }
+
+      this.moveCar = moveCar;
+
     };
 
-    function moveCar(player, car_path) {
-      aTimer.start()
-      var active_ele = "tr#" + player + "_strip td"
-      var index = $(active_ele + ".active").index(); 
-      $(active_ele + ".active").replaceWith("<td>-</td>")
-      $(active_ele).eq(index + 1).replaceWith( "<td class= 'active'><img src=" + car_path + " alt='car' class='image'></td>" );
-    }
+    var Game = function(player1, player2){
+      var self = this;
+      this.player1 =  player1;
+      this.player2 = player2;
+      this.timer = createTimer();
 
-    function checkWinAndRestart(player) {
-      var active_ele = "tr#" + player + "_strip td";
-      var index = $(active_ele + ".active").index();
-      if (index == 19) {
-        aTimer.stop()
-        alert(player.charAt(0).toUpperCase() + player.slice(1) + "Won!");
-        fillAndSubmitHiddenForm(player);
+      this.player1.playerNum = "1"
+      this.player1.carPath = 'images/car.jpeg'
+      this.player2.playerNum = "2"
+      this.player2.carPath = 'images/car2.jpeg'
+
+      function checkWin() {
+        if (player1.location == 19) {
+          this.timer.stop();
+          alert("player1".charAt(0).toUpperCase() + "player1".slice(1) + "Won!");
+          fillAndSubmitHiddenForm(this.player1)
+        }
+        if (player2.location == 19){
+          this.timer.stop();
+          alert("player2".charAt(0).toUpperCase() + "player2".slice(1) + "Won!");
+          fillAndSubmitHiddenForm(this.player2)
+        }
+      };
+
+      function fillAndSubmitHiddenForm(player) {
+        theForm = document.getElementById( 'realForm' );
+        theForm.won.value = player.playerNum;
+        theForm.player1.value = self.player1.location;
+        theForm.player2.value = self.player2.location;
+        theForm.time.value = self.timer.time();
+        theForm.submit();
       }
-    };
 
-    function fillAndSubmitHiddenForm(player) {
-      theForm = document.getElementById( 'realForm' );
-      theForm.won.value = player;
-      theForm.player1.value = location('player1');
-      theForm.player2.value = location('player2');
-      theForm.time.value = $('span').text();
-      theForm.submit();
+      function createTimer() {
+        var elems = document.getElementsByClassName("basic");
+        aTimer = new Stopwatch(elems[0], {delay: 10});
+        return aTimer;
+      };
+
+      this.checkWin = checkWin;
     }
 
-    function location(player) {
-      var active_ele = "tr#" + player + "_strip td";
-      var index = $(active_ele + ".active").index();
-      return index;
-    }
+    var game = new Game(new Player("hi"), new Player("who"));
 
     $(document).on("keyup", function(e) {
         if(e.which == 81){
-          moveCar('player1', "images/car.jpeg");
-          checkWinAndRestart('player1')
+          game.player1.moveCar();
         } 
         if(e.which == 80){
-          moveCar('player2', "images/car2.jpeg");
-          checkWinAndRestart('player2')
+          game.player2.moveCar();
         } 
+        game.checkWin();
     });
-    
+
+    $(document).on("click", function(event){
+      console.log(game.timer.time())
+    });
   });

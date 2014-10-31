@@ -1,10 +1,10 @@
-# get '/games' do
-#   # Look in app/views/index.erb
-#   current_game = Game.find_by(id: session[:game_id])
-#   @user1 = current_game.users.first.name
-#   @user2 = current_game.users[1].name
-#   erb :game
-# end
+get '/games' do
+  # Look in app/views/index.erb
+  current_game = Game.find_by(id: session[:game_id])
+  @user1 = current_game.users.first.name
+  @user2 = current_game.users[1].name
+  erb :game
+end
 
 post '/games' do
 	new_game = Game.create
